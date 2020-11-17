@@ -1,0 +1,143 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icons/001-add.png</file>
+        <file>icons/002-alphabet.png</file>
+        <file>icons/003-binoculars.png</file>
+        <file>icons/004-bold.png</file>
+        <file>icons/005-quote.png</file>
+        <file>icons/006-bullet list.png</file>
+        <file>icons/007-calendar.png</file>
+        <file>icons/008-clipboard.png</file>
+        <file>icons/009-code.png</file>
+        <file>icons/010-command.png</file>
+        <file>icons/011-copy.png</file>
+        <file>icons/012-crop.png</file>
+        <file>icons/013-cut.png</file>
+        <file>icons/014-delete.png</file>
+        <file>icons/015-delete.png</file>
+        <file>icons/016-edit.png</file>
+        <file>icons/017-eraser.png</file>
+        <file>icons/018-eye.png</file>
+        <file>icons/019-eye.png</file>
+        <file>icons/020-filter.png</file>
+        <file>icons/021-find.png</file>
+        <file>icons/022-flip.png</file>
+        <file>icons/023-flip.png</file>
+        <file>icons/024-flip.png</file>
+        <file>icons/025-flip.png</file>
+        <file>icons/026-font.png</file>
+        <file>icons/027-font.png</file>
+        <file>icons/028-font.png</file>
+        <file>icons/029-hashtag.png</file>
+        <file>icons/030-highlighter.png</file>
+        <file>icons/031-italic.png</file>
+        <file>icons/032-ligature.png</file>
+        <file>icons/033-link.png</file>
+        <file>icons/034-link.png</file>
+        <file>icons/035-maximize.png</file>
+        <file>icons/036-minimize.png</file>
+        <file>icons/037-mirror.png</file>
+        <file>icons/038-number.png</file>
+        <file>icons/039-omega.png</file>
+        <file>icons/040-paint bucket.png</file>
+        <file>icons/041-paint roller.png</file>
+        <file>icons/042-paperclip.png</file>
+        <file>icons/043-paragraph.png</file>
+        <file>icons/044-redo.png</file>
+        <file>icons/045-search.png</file>
+        <file>icons/046-search.png</file>
+        <file>icons/047-search.png</file>
+        <file>icons/048-shapes.png</file>
+        <file>icons/049-sigma.png</file>
+        <file>icons/050-sort.png</file>
+        <file>icons/051-sort.png</file>
+        <file>icons/052-square.png</file>
+        <file>icons/053-strikethrough.png</file>
+        <file>icons/054-subscript.png</file>
+        <file>icons/055-superscript.png</file>
+        <file>icons/056-quote.png</file>
+        <file>icons/057-underline.png</file>
+        <file>icons/058-undo.png</file>
+        <file>icons/059-url.png</file>
+        <file>icons/060-url.png</file>
+        <file>icons/001-circle button.png</file>
+        <file>icons/002-down arrow.png</file>
+        <file>icons/003-up arrows.png</file>
+        <file>icons/004-up arrow.png</file>
+        <file>icons/005-brightness.png</file>
+        <file>icons/006-target.png</file>
+        <file>icons/007-check.png</file>
+        <file>icons/008-tick mark.png</file>
+        <file>icons/009-checked.png</file>
+        <file>icons/010-correction.png</file>
+        <file>icons/011-label.png</file>
+        <file>icons/012-checkmark.png</file>
+        <file>icons/013-arrow.png</file>
+        <file>icons/014-paste.png</file>
+        <file>icons/015-clock.png</file>
+        <file>icons/016-crossed.png</file>
+        <file>icons/017-copy.png</file>
+        <file>icons/018-scissors.png</file>
+        <file>icons/019-menu.png</file>
+        <file>icons/020-dashboard.png</file>
+        <file>icons/021-delete.png</file>
+        <file>icons/022-circle.png</file>
+        <file>icons/023-download.png</file>
+        <file>icons/024-ellipsis.png</file>
+        <file>icons/025-ellipsis.png</file>
+        <file>icons/026-ellipsis.png</file>
+        <file>icons/027-ellipsis.png</file>
+        <file>icons/028-feather.png</file>
+        <file>icons/029-filter.png</file>
+        <file>icons/030-flag.png</file>
+        <file>icons/031-funnel.png</file>
+        <file>icons/032-gauge.png</file>
+        <file>icons/033-goal.png</file>
+        <file>icons/034-statistics.png</file>
+        <file>icons/035-hamburger.png</file>
+        <file>icons/036-square.png</file>
+        <file>icons/037-loving.png</file>
+        <file>icons/038-home.png</file>
+        <file>icons/039-home page.png</file>
+        <file>icons/040-house.png</file>
+        <file>icons/041-internet.png</file>
+        <file>icons/042-info.png</file>
+        <file>icons/043-information.png</file>
+        <file>icons/044-inside.png</file>
+        <file>icons/045-lifebuoy.png</file>
+        <file>icons/046-maximize.png</file>
+        <file>icons/047-shrink.png</file>
+        <file>icons/048-delete.png</file>
+        <file>icons/049-remove.png</file>
+        <file>icons/050-remove.png</file>
+        <file>icons/051-power on.png</file>
+        <file>icons/052-resize.png</file>
+        <file>icons/053-edit.png</file>
+        <file>icons/054-editing.png</file>
+        <file>icons/055-search.png</file>
+        <file>icons/056-pin.png</file>
+        <file>icons/057-plus.png</file>
+        <file>icons/058-add.png</file>
+        <file>icons/059-plus sign.png</file>
+        <file>icons/060-printer.png</file>
+        <file>icons/061-printer.png</file>
+        <file>icons/062-faq.png</file>
+        <file>icons/063-help.png</file>
+        <file>icons/064-clear.png</file>
+        <file>icons/065-delete.png</file>
+        <file>icons/066-erase.png</file>
+        <file>icons/067-sharing.png</file>
+        <file>icons/068-reply.png</file>
+        <file>icons/069-forward.png</file>
+        <file>icons/070-signal.png</file>
+        <file>icons/071-star.png</file>
+        <file>icons/072-stop.png</file>
+        <file>icons/073-wall clock.png</file>
+        <file>icons/074-bin.png</file>
+        <file>icons/075-upload.png</file>
+        <file>icons/076-warning.png</file>
+        <file>icons/077-warning sign.png</file>
+        <file>icons/078-waving flag.png</file>
+        <file>icons/floppy-disk.png</file>
+    </qresource>
+</RCC>
