@@ -16,12 +16,6 @@ public:
     TextEdit(QWidget *parent);
 
 public slots:
-    void    setBold();
-    void    setItalic();
-    void    setLink();
-    void    save();
-    void    setTitle(int t);
-//    void    copy();
 };
 
 #endif // TEXTEDIT_H

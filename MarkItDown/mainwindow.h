@@ -23,10 +23,21 @@ private:
     QFontComboBox   *fontBox;
     QComboBox       *fontSize;
     QTabWidget      *editTabs;
-    QTextEdit       *newText;
+//    QTextEdit       *activeTextEdit;
+    void            setActions();
+    QTextEdit       *getCurrentTab();
 
 public slots:
     void            onTextChanged();
-
+    void            openTab();
+//    void            openTab(QString url);
+    void    setBold();
+    void    setItalic();
+    void    setLink();
+    void    save();
+    void    copy();
+    void    cut();
+    void    paste();
+    void    setTitle(int t);
 };
 #endif // MAINWINDOW_H
