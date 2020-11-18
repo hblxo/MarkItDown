@@ -31,6 +31,7 @@ void    MainWindow::setActions()
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(setItalic()));
     connect(ui->actionLink, SIGNAL(triggered()), this, SLOT(setLink()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(fontSize, SIGNAL(activated(int)), this, SLOT(setTitle(int)));
     connect(ui->actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
     connect(ui->actionCut, SIGNAL(triggered()), this, SLOT(cut()));
@@ -50,6 +51,7 @@ void    MainWindow::openTab()
     newTextEdit = new TextEdit(this);
     ui->tabWidget->addTab(newTextEdit, tr("Nouveau Document"));
     connect(newTextEdit, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
+    ui->tabWidget->setCurrentWidget(newTextEdit);
 //    setActions();
 }
 
@@ -121,10 +123,42 @@ void    MainWindow::save()
                 file.errorString());
             return;
         }
-        QDataStream out(&file);
-        out.setVersion(QDataStream::Qt_4_5);
+        QTextStream out(&file);
+//        out.setVersion(QDataStream::Qt_4_5);
         out << activeTab->toPlainText();
      }
+}
+
+void    MainWindow::open()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+            tr("Ouvrir un fichier"), "",
+            tr("All Files (*.md)"));
+    if (fileName.isEmpty())
+            return;
+    else {
+
+        QFile file(fileName);
+
+        if (!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::information(this, tr("Unable to open file"),
+                file.errorString());
+            return;
+        }
+
+        QTextStream in(&file);
+        openTab();
+        QTextEdit   *activeTab = getCurrentTab();
+        activeTab->append(in.readAll());
+
+        /*
+        QTextStream in(&file);
+        openTab();
+        QTextEdit   *activeTab = getCurrentTab();
+        activeTab->setText(in.readLine());
+//        onTextChanged();
+        file.close();*/
+    }
 }
 
 void    MainWindow::copy()

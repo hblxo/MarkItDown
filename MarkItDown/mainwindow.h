@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFontComboBox>
 #include <QTextEdit>
+#include <QTextStream>
 #include "TextEdit.h"
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +36,7 @@ public slots:
     void    setItalic();
     void    setLink();
     void    save();
+    void    open();
     void    copy();
     void    cut();
     void    paste();
