@@ -82,11 +82,13 @@
    <addaction name="actionItalic"/>
    <addaction name="actionLink"/>
    <addaction name="separator"/>
+   <addaction name="actionList"/>
+   <addaction name="actionCode"/>
   </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="MyRes.qrc">
-     <normaloff>:/icon/icons/001-add.png</normaloff>:/icon/icons/001-add.png</iconset>
+     <normaloff>:/icon/icons/file.png</normaloff>:/icon/icons/file.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -192,6 +194,24 @@
    </property>
    <property name="text">
     <string>Link</string>
+   </property>
+  </action>
+  <action name="actionList">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/006-bullet list.png</normaloff>:/icon/icons/006-bullet list.png</iconset>
+   </property>
+   <property name="text">
+    <string>List</string>
+   </property>
+  </action>
+  <action name="actionCode">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/009-code.png</normaloff>:/icon/icons/009-code.png</iconset>
+   </property>
+   <property name="text">
+    <string>Code</string>
    </property>
   </action>
  </widget>

@@ -69,3 +69,8 @@ void    TextEdit::save()
         out << this->toPlainText();
      }
 }
+
+//void    TextEdit::copy()
+//{
+
+//}

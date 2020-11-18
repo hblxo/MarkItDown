@@ -26,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionLink, SIGNAL(triggered()), newText, SLOT(setLink()));
     connect(ui->actionSave, SIGNAL(triggered()), newText, SLOT(save()));
     connect(fontSize, SIGNAL(activated(int)), newText, SLOT(setTitle(int)));
+    connect(ui->actionCopy, SIGNAL(triggered()), newText, SLOT(copy()));
+    connect(ui->actionCut, SIGNAL(triggered()), newText, SLOT(cut()));
+    connect(ui->actionPaste, SIGNAL(triggered()), newText, SLOT(paste()));
 }
 
 MainWindow::~MainWindow()

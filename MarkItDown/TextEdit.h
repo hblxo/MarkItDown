@@ -6,6 +6,7 @@
 #include <QFont>
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <QClipboard>
 
 class TextEdit : public QTextEdit
 {
@@ -20,6 +21,7 @@ public slots:
     void    setLink();
     void    save();
     void    setTitle(int t);
+//    void    copy();
 };
 
 #endif // TEXTEDIT_H

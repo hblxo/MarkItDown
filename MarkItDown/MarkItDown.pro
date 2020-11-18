@@ -10,10 +10,12 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    TextEdit.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    TextEdit.h
 
 FORMS += \
     mainwindow.ui
