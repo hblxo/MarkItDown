@@ -70,6 +70,7 @@
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="actionClose"/>
    <addaction name="separator"/>
    <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
@@ -81,9 +82,10 @@
    <addaction name="actionBold"/>
    <addaction name="actionItalic"/>
    <addaction name="actionLink"/>
-   <addaction name="separator"/>
-   <addaction name="actionList"/>
    <addaction name="actionCode"/>
+   <addaction name="actionList"/>
+   <addaction name="actionRule"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionOpen">
    <property name="icon">
@@ -202,7 +204,7 @@
   <action name="actionList">
    <property name="icon">
     <iconset resource="MyRes.qrc">
-     <normaloff>:/icon/icons/006-bullet list.png</normaloff>:/icon/icons/006-bullet list.png</iconset>
+     <normaloff>:/icon/icons/038-number.png</normaloff>:/icon/icons/038-number.png</iconset>
    </property>
    <property name="text">
     <string>List</string>
@@ -215,6 +217,24 @@
    </property>
    <property name="text">
     <string>Code</string>
+   </property>
+  </action>
+  <action name="actionRule">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/048-delete.png</normaloff>:/icon/icons/048-delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rule</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/016-crossed.png</normaloff>:/icon/icons/016-crossed.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>

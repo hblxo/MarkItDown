@@ -37,6 +37,9 @@ void    MainWindow::setActions()
     connect(ui->actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
     connect(ui->actionCut, SIGNAL(triggered()), this, SLOT(cut()));
     connect(ui->actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
+    connect(ui->actionRule, SIGNAL(triggered()), this, SLOT(printRule()));
+    connect(ui->actionList, SIGNAL(triggered()), this, SLOT(setList()));
+//    conn
 }
 
 void MainWindow::onTextChanged()
@@ -48,9 +51,14 @@ void MainWindow::onTextChanged()
 
 void    MainWindow::openTab()
 {
+   openTab("Nouveau Document");
+}
+
+void    MainWindow::openTab(QString title)
+{
     QTextEdit       *newTextEdit;
     newTextEdit = new TextEdit(this);
-    ui->tabWidget->addTab(newTextEdit, tr("Nouveau Document"));
+    ui->tabWidget->addTab(newTextEdit, title);
     connect(newTextEdit, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
     ui->tabWidget->setCurrentWidget(newTextEdit);
 }
@@ -65,8 +73,12 @@ void    MainWindow::setBold()
 {
     QTextEdit   *activeTab = getCurrentTab();
     QTextCursor cursor = activeTab->textCursor();
-    activeTab->insertPlainText("**" + cursor.selectedText() + "**");
-    //to-do : unset bold if already set
+    QString     prefix = "**";
+
+    if (QRegularExpression("\\*\\*").match(cursor.selectedText()).hasMatch())
+        cursor.insertText(cursor.selectedText().replace(QRegularExpression("\\*\\*"), ""));
+    else
+        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
 }
 
 void    MainWindow::setItalic()
@@ -163,17 +175,9 @@ void    MainWindow::open()
         }
 
         QTextStream in(&file);
-        openTab();
+        openTab(fileName);
         QTextEdit   *activeTab = getCurrentTab();
         activeTab->append(in.readAll());
-
-        /*
-        QTextStream in(&file);
-        openTab();
-        QTextEdit   *activeTab = getCurrentTab();
-        activeTab->setText(in.readLine());
-//        onTextChanged();
-        file.close();*/
     }
 }
 
@@ -193,4 +197,30 @@ void    MainWindow::paste()
 {
     QTextEdit  *activeTab = getCurrentTab();
     activeTab->paste();
+}
+
+void MainWindow::printRule()
+{
+    QTextEdit   *activeTab = getCurrentTab();
+    QTextCursor cursor = activeTab->textCursor();
+    activeTab->insertPlainText("\n----\n");
+}
+
+void    MainWindow::setList()
+{
+    /*
+    QTextEdit   *activeTab = getCurrentTab();
+    int i = 0;
+    QTextCursor cursor = activeTab->textCursor();
+    QTextCursor newCursor;
+    for (QTextBlock block = cursor.block().previous(); block.isValid(); block = block.previous())
+    {
+
+        newCursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
+
+//        block.
+        i++;
+    }
+    qDebug() << i;
+    */
 }

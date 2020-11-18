@@ -7,6 +7,7 @@
 #include <QTextEdit>
 #include <QTextDocumentFragment>
 #include <QTextStream>
+#include <QTextBlock>
 #include "TextEdit.h"
 
 QT_BEGIN_NAMESPACE
@@ -31,18 +32,21 @@ private:
     QTextEdit       *getCurrentTab();
 
 public slots:
-    void            onTextChanged();
-    void            openTab();
-//    void            openTab(QString url);
+    void    onTextChanged();
+    void    openTab();
+    void    openTab(QString title);
+    void    setList();
     void    setBold();
     void    setItalic();
     void    setLink();
     void    setCode();
+    void    printRule();
     void    save();
     void    open();
     void    copy();
     void    cut();
     void    paste();
     void    setTitle(int t);
+//to-do : undo and redo
 };
 #endif // MAINWINDOW_H
