@@ -1,9 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDebug>
 #include <QMainWindow>
 #include <QFontComboBox>
 #include <QTextEdit>
+#include <QTextDocumentFragment>
 #include <QTextStream>
 #include "TextEdit.h"
 
@@ -35,6 +37,7 @@ public slots:
     void    setBold();
     void    setItalic();
     void    setLink();
+    void    setCode();
     void    save();
     void    open();
     void    copy();

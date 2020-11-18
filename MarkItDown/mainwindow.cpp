@@ -7,14 +7,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-//    fontBox = new QFontComboBox();
-//    ui->toolBar->addWidget(fontBox);
-
     fontSize = new QComboBox();
     fontSize->addItem(tr("Normal"), 0);
     fontSize->addItem(tr("Title 1"), 1);
     fontSize->addItem(tr("Title 2"), 2);
     fontSize->addItem(tr("Title 3"), 3);
+    fontSize->addItem(tr("Title 4"), 4);
+    fontSize->addItem(tr("Title 5"), 5);
+    fontSize->addItem(tr("Title 6"), 6);
     ui->toolBar->addWidget(fontSize);
     setActions();
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(openTab()));
@@ -30,6 +30,7 @@ void    MainWindow::setActions()
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(setBold()));
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(setItalic()));
     connect(ui->actionLink, SIGNAL(triggered()), this, SLOT(setLink()));
+    connect(ui->actionCode, SIGNAL(triggered()), this, SLOT(setCode()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(fontSize, SIGNAL(activated(int)), this, SLOT(setTitle(int)));
@@ -52,7 +53,6 @@ void    MainWindow::openTab()
     ui->tabWidget->addTab(newTextEdit, tr("Nouveau Document"));
     connect(newTextEdit, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
     ui->tabWidget->setCurrentWidget(newTextEdit);
-//    setActions();
 }
 
 QTextEdit   *MainWindow::getCurrentTab()
@@ -103,6 +103,23 @@ void    MainWindow::setTitle(int t)
     cursor.insertText(cursor.selectedText().replace(QRegularExpression("(^(?:#+ )|^ *)"), prefix));
 }
 
+void    MainWindow::setCode()
+{
+    QTextEdit   *activeTab = getCurrentTab();
+    QString     prefix;
+    QTextCursor cursor = activeTab->textCursor();
+    int selectedLines = 0;
+
+    if (!cursor.selectedText().isEmpty())
+    {
+        QString str = cursor.selection().toPlainText();
+        selectedLines = str.count("\n")+1;
+    }
+    prefix = (selectedLines > 1) ? "```" : "`";
+    activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
+    //to-do : unset code if already set
+}
+
 void    MainWindow::save()
 {
     QTextEdit   *activeTab = getCurrentTab();
@@ -124,7 +141,6 @@ void    MainWindow::save()
             return;
         }
         QTextStream out(&file);
-//        out.setVersion(QDataStream::Qt_4_5);
         out << activeTab->toPlainText();
      }
 }
