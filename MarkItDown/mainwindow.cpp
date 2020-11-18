@@ -7,15 +7,25 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    fontBox = new QFontComboBox();
-    ui->toolBar->addWidget(fontBox);
+//    fontBox = new QFontComboBox();
+//    ui->toolBar->addWidget(fontBox);
 
-   newText = new QTextEdit();
-    ui->tabWidget->addTab(newText, "New Page");
-//    ui->textBrowser->setDocument(newText->document());
-    //    ui->textBrowser->setMarkdown(newText->toMarkdown());
-//    ui->textBrowser->setMarkdown(newText->document()->toMarkdown());
+    fontSize = new QComboBox();
+    fontSize->addItem(tr("Normal"), 0);
+    fontSize->addItem(tr("Title 1"), 1);
+    fontSize->addItem(tr("Title 2"), 2);
+    fontSize->addItem(tr("Title 3"), 3);
+    ui->toolBar->addWidget(fontSize);
+
+    newText = new TextEdit(this);
+    ui->tabWidget->addTab(newText, tr("Nouveau Document"));
     connect(newText, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
+
+    connect(ui->actionBold, SIGNAL(triggered()), newText, SLOT(setBold()));
+    connect(ui->actionItalic, SIGNAL(triggered()), newText, SLOT(setItalic()));
+    connect(ui->actionLink, SIGNAL(triggered()), newText, SLOT(setLink()));
+    connect(ui->actionSave, SIGNAL(triggered()), newText, SLOT(save()));
+    connect(fontSize, SIGNAL(activated(int)), newText, SLOT(setTitle(int)));
 }
 
 MainWindow::~MainWindow()

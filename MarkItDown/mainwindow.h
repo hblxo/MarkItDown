@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFontComboBox>
 #include <QTextEdit>
+#include "TextEdit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,11 +18,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-
-
 private:
     Ui::MainWindow  *ui;
     QFontComboBox   *fontBox;
+    QComboBox       *fontSize;
     QTabWidget      *editTabs;
     QTextEdit       *newText;
 
