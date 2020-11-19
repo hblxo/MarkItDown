@@ -81,8 +81,10 @@
    <addaction name="separator"/>
    <addaction name="actionBold"/>
    <addaction name="actionItalic"/>
+   <addaction name="actionStrike"/>
    <addaction name="actionLink"/>
    <addaction name="actionCode"/>
+   <addaction name="actionUList"/>
    <addaction name="actionList"/>
    <addaction name="actionRule"/>
    <addaction name="separator"/>
@@ -235,6 +237,27 @@
    </property>
    <property name="text">
     <string>Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionStrike">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/053-strikethrough.png</normaloff>:/icon/icons/053-strikethrough.png</iconset>
+   </property>
+   <property name="text">
+    <string>Strike</string>
+   </property>
+  </action>
+  <action name="actionUList">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/002-alphabet.png</normaloff>:/icon/icons/002-alphabet.png</iconset>
+   </property>
+   <property name="text">
+    <string>UList</string>
    </property>
   </action>
  </widget>

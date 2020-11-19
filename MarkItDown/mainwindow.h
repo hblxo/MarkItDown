@@ -35,6 +35,7 @@ public slots:
     void    onTextChanged();
     void    openTab();
     void    openTab(QString title);
+    void    close();
     void    setList();
     void    setBold();
     void    setItalic();

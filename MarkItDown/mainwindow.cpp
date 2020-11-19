@@ -39,7 +39,7 @@ void    MainWindow::setActions()
     connect(ui->actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
     connect(ui->actionRule, SIGNAL(triggered()), this, SLOT(printRule()));
     connect(ui->actionList, SIGNAL(triggered()), this, SLOT(setList()));
-//    conn
+    connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
 }
 
 void MainWindow::onTextChanged()
@@ -75,8 +75,8 @@ void    MainWindow::setBold()
     QTextCursor cursor = activeTab->textCursor();
     QString     prefix = "**";
 
-    if (QRegularExpression("\\*\\*").match(cursor.selectedText()).hasMatch())
-        cursor.insertText(cursor.selectedText().replace(QRegularExpression("\\*\\*"), ""));
+    if (QRegularExpression("(\\*\\*|__)(.*?)\\1").match(cursor.selectedText()).hasMatch())
+        cursor.insertText(cursor.selectedText().replace(QRegularExpression("(\\*\\*|__)"), ""));
     else
         activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
 }
@@ -85,8 +85,16 @@ void    MainWindow::setItalic()
 {
     QTextEdit   *activeTab = getCurrentTab();
     QTextCursor cursor = activeTab->textCursor();
-    activeTab->insertPlainText("*" + cursor.selectedText() + "*");
-    //to-do : unset italic if already set
+    QString     prefix = "*";
+
+
+    if (QRegularExpression("(\\*\\*|__)(.*?)\\1").match(cursor.selectedText()).hasMatch())
+        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
+    else if (QRegularExpression("\\*").match(cursor.selectedText()).hasMatch())
+        cursor.insertText(cursor.selectedText().replace(QRegularExpression("\\*"), ""));
+    else
+        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
+    //to-do : unset italic if already set + improve detection (regex)
 }
 
 void    MainWindow::setLink()
@@ -204,6 +212,11 @@ void MainWindow::printRule()
     QTextEdit   *activeTab = getCurrentTab();
     QTextCursor cursor = activeTab->textCursor();
     activeTab->insertPlainText("\n----\n");
+}
+
+void    MainWindow::close()
+{
+    ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
 }
 
 void    MainWindow::setList()
