@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "MarkdownHandler.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -42,6 +43,7 @@ void    MainWindow::setActions()
     connect(ui->actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
     connect(ui->actionRule, SIGNAL(triggered()), this, SLOT(printRule()));
     connect(ui->actionList, SIGNAL(triggered()), this, SLOT(setList()));
+    connect(ui->actionUList, SIGNAL(triggered()), this, SLOT(setUList()));
     connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
 }
 
@@ -75,6 +77,9 @@ QTextEdit   *MainWindow::getCurrentTab()
 void    MainWindow::setBold()
 {
     QTextEdit   *activeTab = getCurrentTab();
+
+    MarkdownHandler::wrapText(activeTab, "**");
+    /*
     QTextCursor cursor = activeTab->textCursor();
     QString     prefix = "**";
 
@@ -82,11 +87,15 @@ void    MainWindow::setBold()
         cursor.insertText(cursor.selectedText().replace(QRegularExpression("(\\*\\*|__)"), ""));
     else
         activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
+*/
 }
 
 void    MainWindow::setItalic()
 {
     QTextEdit   *activeTab = getCurrentTab();
+
+    MarkdownHandler::wrapText(activeTab, "*");
+    /*
     QTextCursor cursor = activeTab->textCursor();
     QString     prefix = "*";
 
@@ -96,7 +105,7 @@ void    MainWindow::setItalic()
     else if (QRegularExpression("\\*").match(cursor.selectedText()).hasMatch())
         cursor.insertText(cursor.selectedText().replace(QRegularExpression("\\*"), ""));
     else
-        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
+        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);*/
     //to-do : unset italic if already set + improve detection (regex)
 }
 
@@ -128,6 +137,9 @@ void    MainWindow::setTitle(int t)
 void    MainWindow::setCode()
 {
     QTextEdit   *activeTab = getCurrentTab();
+
+    MarkdownHandler::wrapParagraph(activeTab, "```\r", "\r```");
+    /*
     QString     prefix;
     QTextCursor cursor = activeTab->textCursor();
     int selectedLines = 0;
@@ -139,6 +151,7 @@ void    MainWindow::setCode()
     }
     prefix = (selectedLines > 1) ? "```" : "`";
     activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
+    */
     //to-do : unset code if already set
 }
 
@@ -234,18 +247,24 @@ void    MainWindow::close()
     ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
 }
 
+void    MainWindow::setUList()
+{
+    QTextEdit   *activeTab = getCurrentTab();
+
+    MarkdownHandler::prependEachLine(activeTab, "* ");
+}
+
 void    MainWindow::setList()
 {
     //to-do : unordered and ordered lists
-    /*
     QTextEdit   *activeTab = getCurrentTab();
-    QString     prefix = "\n* ";
-    QTextCursor cursor = activeTab->textCursor();
 
-    if (QRegularExpression("(\n|\r)").match(cursor.selectedText()).hasMatch())
-        qDebug() << "list" ;
-    cursor.insertText(cursor.selectedText().replace(QRegularExpression("(\n|\r)"), prefix));
-    */
+    MarkdownHandler::prependEachLine(activeTab, "1. ");
+
+    //to-do : unset list if already set
+    //to-do : transform unordered list to ordered list and vice-versa
+    //to-do : transform each selected paragraph in list item if cursor has selection
+
 
     ///"^(?:\d+\.|[*+-]) .*(?:\r?\n(?!(?:\d+\.|[*+-]) ).*)*/gm"
 }

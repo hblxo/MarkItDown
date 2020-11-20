@@ -37,6 +37,7 @@ public slots:
     void    openTab(QString title);
     void    close();
     void    setList();
+    void    setUList();
     void    setBold();
     void    setItalic();
     void    setLink();
@@ -52,5 +53,7 @@ public slots:
     //to-do : setQuote();
     //to-do : setStroke()
     //to-do : undo and redo
+    //to-do : image link
+    //to-do : options panel (auto-save, hardbreak with enter key, etc.)
 };
 #endif // MAINWINDOW_H
