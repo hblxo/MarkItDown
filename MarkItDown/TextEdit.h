@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QRegularExpression>
 #include <QClipboard>
+#include <QMenu>
 
 class TextEdit : public QTextEdit
 {
@@ -16,6 +17,8 @@ public:
     TextEdit(QWidget *parent);
 
 public slots:
+//    void    ShowContextMenu(const QPoint& pos);
+
 };
 
 #endif // TEXTEDIT_H

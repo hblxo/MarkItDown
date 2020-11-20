@@ -2,9 +2,8 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+    : QMainWindow(parent), ui(new Ui::MainWindow) {
+
     ui->setupUi(this);
 
     fontSize = new QComboBox();
@@ -19,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
     setActions();
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(openTab()));
 }
+
+// to-do : contextual menu
+// to-do : deactivate actions if no tab
+// to-do : override Os keyboard shortcut
 
 MainWindow::~MainWindow()
 {
@@ -104,7 +107,6 @@ void    MainWindow::setLink()
     activeTab->insertPlainText("["+ cursor.selectedText() + "]()");
     cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
     activeTab->setTextCursor(cursor);
-    //to-do : set automatic link if an url is pasted
 }
 
 void    MainWindow::setTitle(int t)
@@ -204,14 +206,27 @@ void    MainWindow::cut()
 void    MainWindow::paste()
 {
     QTextEdit  *activeTab = getCurrentTab();
+    QClipboard *clipboard = QApplication::clipboard();
+    QString originalText = clipboard->text();
+    QString tmp = originalText;
+    QTextCursor cursor = activeTab->textCursor();
+
+    if (QRegularExpression("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]").match(originalText).hasMatch())
+    {
+        if (cursor.hasSelection())
+            clipboard->setText("[" + cursor.selection().toPlainText() + "](" + originalText + ")");
+        else
+            clipboard->setText("[" + originalText + "](" + originalText + ")");
+    }
     activeTab->paste();
+    clipboard->setText(tmp);
 }
 
 void MainWindow::printRule()
 {
     QTextEdit   *activeTab = getCurrentTab();
     QTextCursor cursor = activeTab->textCursor();
-    activeTab->insertPlainText("\n----\n");
+    cursor.insertText("\n----\n");
 }
 
 void    MainWindow::close()
@@ -221,19 +236,18 @@ void    MainWindow::close()
 
 void    MainWindow::setList()
 {
+    //to-do : unordered and ordered lists
     /*
     QTextEdit   *activeTab = getCurrentTab();
-    int i = 0;
+    QString     prefix = "\n* ";
     QTextCursor cursor = activeTab->textCursor();
-    QTextCursor newCursor;
-    for (QTextBlock block = cursor.block().previous(); block.isValid(); block = block.previous())
-    {
 
-        newCursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
-
-//        block.
-        i++;
-    }
-    qDebug() << i;
+    if (QRegularExpression("(\n|\r)").match(cursor.selectedText()).hasMatch())
+        qDebug() << "list" ;
+    cursor.insertText(cursor.selectedText().replace(QRegularExpression("(\n|\r)"), prefix));
     */
+
+    ///"^(?:\d+\.|[*+-]) .*(?:\r?\n(?!(?:\d+\.|[*+-]) ).*)*/gm"
 }
+
+

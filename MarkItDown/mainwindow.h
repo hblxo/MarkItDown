@@ -8,6 +8,7 @@
 #include <QTextDocumentFragment>
 #include <QTextStream>
 #include <QTextBlock>
+#include <QShortcut>
 #include "TextEdit.h"
 
 QT_BEGIN_NAMESPACE
@@ -27,7 +28,6 @@ private:
     QFontComboBox   *fontBox;
     QComboBox       *fontSize;
     QTabWidget      *editTabs;
-//    QTextEdit       *activeTextEdit;
     void            setActions();
     QTextEdit       *getCurrentTab();
 
@@ -48,6 +48,9 @@ public slots:
     void    cut();
     void    paste();
     void    setTitle(int t);
-//to-do : undo and redo
+
+    //to-do : setQuote();
+    //to-do : setStroke()
+    //to-do : undo and redo
 };
 #endif // MAINWINDOW_H
