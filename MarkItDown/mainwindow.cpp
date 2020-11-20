@@ -266,7 +266,7 @@ void    MainWindow::setList()
     //to-do : transform each selected paragraph in list item if cursor has selection
 
 
-    ///"^(?:\d+\.|[*+-]) .*(?:\r?\n(?!(?:\d+\.|[*+-]) ).*)*/gm"
+    // "^(?:\d+\.|[*+-]) .*(?:\r?\n(?!(?:\d+\.|[*+-]) ).*)*/gm"
 }
 
 

@@ -36,22 +36,22 @@ public slots:
     void    openTab();
     void    openTab(QString title);
     void    close();
-    void    setList();
-    void    setUList();
-    void    setBold();
-    void    setItalic();
-    void    setLink();
-    void    setCode();
+    void    formatOList();
+    void    formatUList();
+    void    formatBold();
+    void    formatItalic();
+    void    formatLink();
+    void    formatCodeSnippet();
     void    printRule();
     void    save();
     void    open();
     void    copy();
     void    cut();
     void    paste();
-    void    setTitle(int t);
+    void    formatTitle(int t);
 
-    //to-do : setQuote();
-    //to-do : setStroke()
+    //to-do : formatQuote();
+    //to-do : format Strokeline()
     //to-do : undo and redo
     //to-do : image link
     //to-do : options panel (auto-save, hardbreak with enter key, etc.)
