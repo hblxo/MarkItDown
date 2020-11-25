@@ -50,6 +50,7 @@ public slots:
     void    paste();
     void    formatTitle(int t);
     void    formatQuote();
+    void    formatStrikethrough();
 
     //to-do : format Strokeline()
     //to-do : undo and redo

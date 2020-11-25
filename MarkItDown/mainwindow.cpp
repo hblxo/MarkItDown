@@ -46,6 +46,7 @@ void    MainWindow::setActions()
     connect(ui->actionUList, SIGNAL(triggered()), this, SLOT(formatUList()));
     connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->actionQuote, SIGNAL(triggered()), this, SLOT(formatQuote()));
+    connect(ui->actionStrike, SIGNAL(triggered()), this, SLOT(formatStrikethrough()));
 }
 
 void MainWindow::onTextChanged()
@@ -278,4 +279,11 @@ void    MainWindow::formatQuote()
         MarkdownHandler::unPrependEachLine(activeTab, QRegularExpression("^ ?>+ ?"));
     else
         MarkdownHandler::prependEachLine(activeTab, "> ");
+}
+
+void    MainWindow::formatStrikethrough()
+{
+    QTextEdit   *activeTab = getCurrentTab();
+
+    MarkdownHandler::wrapText(activeTab, "~~");
 }
