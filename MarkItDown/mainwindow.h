@@ -49,8 +49,8 @@ public slots:
     void    cut();
     void    paste();
     void    formatTitle(int t);
+    void    formatQuote();
 
-    //to-do : formatQuote();
     //to-do : format Strokeline()
     //to-do : undo and redo
     //to-do : image link

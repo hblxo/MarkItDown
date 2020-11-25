@@ -88,6 +88,7 @@
    <addaction name="actionList"/>
    <addaction name="actionRule"/>
    <addaction name="separator"/>
+   <addaction name="actionQuote"/>
   </widget>
   <action name="actionOpen">
    <property name="icon">
@@ -267,6 +268,15 @@
    </property>
    <property name="text">
     <string>UList</string>
+   </property>
+  </action>
+  <action name="actionQuote">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/056-quote.png</normaloff>:/icon/icons/056-quote.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quote</string>
    </property>
   </action>
  </widget>

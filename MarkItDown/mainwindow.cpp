@@ -31,20 +31,21 @@ MainWindow::~MainWindow()
 
 void    MainWindow::setActions()
 {
-    connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(setBold()));
-    connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(setItalic()));
-    connect(ui->actionLink, SIGNAL(triggered()), this, SLOT(setLink()));
-    connect(ui->actionCode, SIGNAL(triggered()), this, SLOT(setCode()));
+    connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(formatBold()));
+    connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(formatItalic()));
+    connect(ui->actionLink, SIGNAL(triggered()), this, SLOT(formatLink()));
+    connect(ui->actionCode, SIGNAL(triggered()), this, SLOT(formatCodeSnippet()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
-    connect(fontSize, SIGNAL(activated(int)), this, SLOT(setTitle(int)));
+    connect(fontSize, SIGNAL(activated(int)), this, SLOT(formatTitle(int)));
     connect(ui->actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
     connect(ui->actionCut, SIGNAL(triggered()), this, SLOT(cut()));
     connect(ui->actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
     connect(ui->actionRule, SIGNAL(triggered()), this, SLOT(printRule()));
-    connect(ui->actionList, SIGNAL(triggered()), this, SLOT(setList()));
-    connect(ui->actionUList, SIGNAL(triggered()), this, SLOT(setUList()));
+    connect(ui->actionList, SIGNAL(triggered()), this, SLOT(formatOList()));
+    connect(ui->actionUList, SIGNAL(triggered()), this, SLOT(formatUList()));
     connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
+    connect(ui->actionQuote, SIGNAL(triggered()), this, SLOT(formatQuote()));
 }
 
 void MainWindow::onTextChanged()
@@ -74,7 +75,7 @@ QTextEdit   *MainWindow::getCurrentTab()
 }
 
 
-void    MainWindow::setBold()
+void    MainWindow::formatBold()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
@@ -90,7 +91,7 @@ void    MainWindow::setBold()
 */
 }
 
-void    MainWindow::setItalic()
+void    MainWindow::formatItalic()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
@@ -109,7 +110,7 @@ void    MainWindow::setItalic()
     //to-do : unset italic if already set + improve detection (regex)
 }
 
-void    MainWindow::setLink()
+void    MainWindow::formatLink()
 {
     QTextEdit   *activeTab = getCurrentTab();
     QTextCursor cursor = activeTab->textCursor();
@@ -118,7 +119,7 @@ void    MainWindow::setLink()
     activeTab->setTextCursor(cursor);
 }
 
-void    MainWindow::setTitle(int t)
+void    MainWindow::formatTitle(int t)
 {
     QTextEdit   *activeTab = getCurrentTab();
     QString prefix;
@@ -134,7 +135,7 @@ void    MainWindow::setTitle(int t)
     cursor.insertText(cursor.selectedText().replace(QRegularExpression("(^(?:#+ )|^ *)"), prefix));
 }
 
-void    MainWindow::setCode()
+void    MainWindow::formatCodeSnippet()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
@@ -247,14 +248,14 @@ void    MainWindow::close()
     ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
 }
 
-void    MainWindow::setUList()
+void    MainWindow::formatUList()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
     MarkdownHandler::prependEachLine(activeTab, "* ");
 }
 
-void    MainWindow::setList()
+void    MainWindow::formatOList()
 {
     //to-do : unordered and ordered lists
     QTextEdit   *activeTab = getCurrentTab();
@@ -263,10 +264,18 @@ void    MainWindow::setList()
 
     //to-do : unset list if already set
     //to-do : transform unordered list to ordered list and vice-versa
-    //to-do : transform each selected paragraph in list item if cursor has selection
+    //to-do : set empty list item if cursor has no selection
 
 
     // "^(?:\d+\.|[*+-]) .*(?:\r?\n(?!(?:\d+\.|[*+-]) ).*)*/gm"
 }
 
+void    MainWindow::formatQuote()
+{
+    QTextEdit   *activeTab = getCurrentTab();
 
+    if (MarkdownHandler::isAlreadyPrefixed(activeTab, QRegularExpression("^ ?>+ ?")))
+        MarkdownHandler::unPrependEachLine(activeTab, QRegularExpression("^ ?>+ ?"));
+    else
+        MarkdownHandler::prependEachLine(activeTab, "> ");
+}
