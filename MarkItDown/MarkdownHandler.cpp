@@ -71,7 +71,6 @@ void    MarkdownHandler::unPrependEachLine(QTextEdit *editor, QRegularExpression
         cursor.movePosition(QTextCursor::StartOfBlock);
         if (cursor.block().text().contains(rx))
         {
-//            cursor.block().text().remove(rx); //doesn't work
             cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
             cursor.insertText(cursor.selectedText().remove(rx));
         }
@@ -100,10 +99,26 @@ void    MarkdownHandler::wrapText(QTextEdit *editor, QString leftWrap, QString r
         cursor.insertText(leftWrap + text + rightWrap);
 }
 
+bool    MarkdownHandler::isAlreadyWrapped(QTextEdit *editor, QString leftWrap, QString rightWrap)
+{
+    QTextCursor cursor = editor->textCursor();
+    int         start = cursor.selectionStart();
+    int         end = cursor.selectionEnd();
+
+    cursor.setPosition(start);
+    if (cursor.block().previous().text().indexOf(leftWrap) != 0
+            || cursor.block().previous().text().lastIndexOf(leftWrap) != 0)
+        return false;
+    cursor.setPosition(end);
+    if (cursor.block().next().text().indexOf(rightWrap) != 0
+            || cursor.block().next().text().lastIndexOf(rightWrap) != 0)
+        return false;
+    return true;
+}
+
 void    MarkdownHandler::wrapParagraph(QTextEdit *editor, QString leftWrap, QString rightWrap)
 {
     QTextCursor cursor = editor->textCursor();
-//    QString     tmp = cursor.selectedText();
     int         end = cursor.selectionEnd();
 
     if (rightWrap == NULL)
@@ -111,17 +126,27 @@ void    MarkdownHandler::wrapParagraph(QTextEdit *editor, QString leftWrap, QStr
     cursor.beginEditBlock();
     cursor.setPosition(cursor.selectionStart());
     cursor.movePosition(QTextCursor::StartOfBlock);
-    editor->setTextCursor(cursor);
-    cursor.insertText(leftWrap);
-    cursor.setPosition(end);
-    cursor.movePosition(QTextCursor::EndOfBlock);
-    editor->setTextCursor(cursor);
-    cursor.insertText(rightWrap);
-    cursor.endEditBlock();
-/*
-    if (block.text().indexOf(leftWrap) == 0 && block.text().lastIndexOf(rightWrap) == block.text().length() - rightWrap.length())
+    if  (isAlreadyWrapped(editor, leftWrap, rightWrap))
     {
-        //to-do : remove wrap if existing at the beginning and end of selected block
-        //?? : right condition
-*/
+        cursor.movePosition(QTextCursor::PreviousBlock);
+        cursor.select(QTextCursor::BlockUnderCursor);
+        cursor.removeSelectedText();
+        cursor.setPosition(end);
+        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor);
+        cursor.select(QTextCursor::BlockUnderCursor);
+        cursor.removeSelectedText();
+        editor->setTextCursor(cursor);
+    }
+    else
+    {
+        editor->setTextCursor(cursor);
+        cursor.insertText(leftWrap + "\r");
+        cursor.setPosition(end);
+        cursor.movePosition(QTextCursor::EndOfBlock);
+        editor->setTextCursor(cursor);
+        cursor.insertText("\r" + rightWrap);
+        cursor.movePosition(QTextCursor::PreviousBlock);
+        editor->setTextCursor(cursor);
+    }
+    cursor.endEditBlock();
 }
