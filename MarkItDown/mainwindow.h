@@ -41,6 +41,7 @@ public slots:
     void    formatBold();
     void    formatItalic();
     void    formatLink();
+    void    formatInlineCode();
     void    formatCodeSnippet();
     void    printRule();
     void    save();

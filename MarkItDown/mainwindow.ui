@@ -83,7 +83,8 @@
    <addaction name="actionItalic"/>
    <addaction name="actionStrike"/>
    <addaction name="actionLink"/>
-   <addaction name="actionCode"/>
+   <addaction name="actionCodeSnippet"/>
+   <addaction name="actionInlineCode"/>
    <addaction name="actionUList"/>
    <addaction name="actionList"/>
    <addaction name="actionRule"/>
@@ -222,13 +223,16 @@
     <string>List</string>
    </property>
   </action>
-  <action name="actionCode">
+  <action name="actionInlineCode">
    <property name="icon">
     <iconset resource="MyRes.qrc">
      <normaloff>:/icon/icons/009-code.png</normaloff>:/icon/icons/009-code.png</iconset>
    </property>
    <property name="text">
-    <string>Code</string>
+    <string>Inline Code</string>
+   </property>
+   <property name="toolTip">
+    <string>Inline Code </string>
    </property>
   </action>
   <action name="actionRule">
@@ -277,6 +281,18 @@
    </property>
    <property name="text">
     <string>Quote</string>
+   </property>
+  </action>
+  <action name="actionCodeSnippet">
+   <property name="icon">
+    <iconset resource="MyRes.qrc">
+     <normaloff>:/icon/icons/programing.png</normaloff>:/icon/icons/programing.png</iconset>
+   </property>
+   <property name="text">
+    <string>Code Snippet</string>
+   </property>
+   <property name="toolTip">
+    <string>Code Snippet</string>
    </property>
   </action>
  </widget>

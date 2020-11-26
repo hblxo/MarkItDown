@@ -30,7 +30,8 @@ void    MainWindow::setActions()
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(formatBold()));
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(formatItalic()));
     connect(ui->actionLink, SIGNAL(triggered()), this, SLOT(formatLink()));
-    connect(ui->actionCode, SIGNAL(triggered()), this, SLOT(formatCodeSnippet()));
+    connect(ui->actionCodeSnippet, SIGNAL(triggered()), this, SLOT(formatCodeSnippet()));
+    connect(ui->actionInlineCode, SIGNAL(triggered()), this, SLOT(formatInlineCode()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(fontSize, SIGNAL(activated(int)), this, SLOT(formatTitle(int)));
@@ -111,25 +112,18 @@ void    MainWindow::formatTitle(int t)
     cursor.insertText(cursor.selectedText().replace(QRegularExpression("(^(?:#+ )|^ *)"), prefix));
 }
 
+void    MainWindow::formatInlineCode()
+{
+    QTextEdit   *activeTab = getCurrentTab();
+
+    MarkdownHandler::wrapText(activeTab, "`");
+}
+
 void    MainWindow::formatCodeSnippet()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
     MarkdownHandler::wrapParagraph(activeTab, "```");
-    /*
-    QString     prefix;
-    QTextCursor cursor = activeTab->textCursor();
-    int selectedLines = 0;
-
-    if (!cursor.selectedText().isEmpty())
-    {
-        QString str = cursor.selection().toPlainText();
-        selectedLines = str.count("\n")+1;
-    }
-    prefix = (selectedLines > 1) ? "```" : "`";
-    activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
-    */
-    //to-do : unset code if already set
 }
 
 void    MainWindow::save()

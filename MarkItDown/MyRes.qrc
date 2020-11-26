@@ -140,5 +140,7 @@
         <file>icons/078-waving flag.png</file>
         <file>icons/floppy-disk.png</file>
         <file>icons/file.png</file>
+        <file>icons/programing.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>
