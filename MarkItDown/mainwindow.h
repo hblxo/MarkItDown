@@ -52,7 +52,10 @@ public slots:
     void    formatQuote();
     void    formatStrikethrough();
 
-    //to-do : format Strokeline()
+    // to-do : contextual menu
+    // to-do : deactivate actions if no tab
+    // to-do : override Os keyboard shortcut
+
     //to-do : undo and redo
     //to-do : image link
     //to-do : options panel (auto-save, hardbreak with enter key, etc.)

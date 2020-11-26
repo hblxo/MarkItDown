@@ -20,10 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(openTab()));
 }
 
-// to-do : contextual menu
-// to-do : deactivate actions if no tab
-// to-do : override Os keyboard shortcut
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -81,15 +77,6 @@ void    MainWindow::formatBold()
     QTextEdit   *activeTab = getCurrentTab();
 
     MarkdownHandler::wrapText(activeTab, "**");
-    /*
-    QTextCursor cursor = activeTab->textCursor();
-    QString     prefix = "**";
-
-    if (QRegularExpression("(\\*\\*|__)(.*?)\\1").match(cursor.selectedText()).hasMatch())
-        cursor.insertText(cursor.selectedText().replace(QRegularExpression("(\\*\\*|__)"), ""));
-    else
-        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
-*/
 }
 
 void    MainWindow::formatItalic()
@@ -97,18 +84,6 @@ void    MainWindow::formatItalic()
     QTextEdit   *activeTab = getCurrentTab();
 
     MarkdownHandler::wrapText(activeTab, "*");
-    /*
-    QTextCursor cursor = activeTab->textCursor();
-    QString     prefix = "*";
-
-
-    if (QRegularExpression("(\\*\\*|__)(.*?)\\1").match(cursor.selectedText()).hasMatch())
-        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);
-    else if (QRegularExpression("\\*").match(cursor.selectedText()).hasMatch())
-        cursor.insertText(cursor.selectedText().replace(QRegularExpression("\\*"), ""));
-    else
-        activeTab->insertPlainText(prefix + cursor.selectedText() + prefix);*/
-    //to-do : unset italic if already set + improve detection (regex)
 }
 
 void    MainWindow::formatLink()
@@ -140,7 +115,7 @@ void    MainWindow::formatCodeSnippet()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
-    MarkdownHandler::wrapParagraph(activeTab, "```\r", "\r```");
+    MarkdownHandler::wrapParagraph(activeTab, "```");
     /*
     QString     prefix;
     QTextCursor cursor = activeTab->textCursor();
