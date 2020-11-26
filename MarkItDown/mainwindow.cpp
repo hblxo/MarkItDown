@@ -221,22 +221,39 @@ void    MainWindow::close()
 void    MainWindow::formatUList()
 {
     QTextEdit   *activeTab = getCurrentTab();
+    QRegularExpression oRegex = QRegularExpression("^( *[0-9]+(\\.|\\))( |\t)+)");
+    QRegularExpression uRegex = QRegularExpression("^( *(-|\\*|\\+)( |\t)+)");
 
-    MarkdownHandler::prependEachLine(activeTab, "* ");
+
+    if (MarkdownHandler::linesAreAlreadyPrefixed(activeTab, uRegex))
+        MarkdownHandler::unPrependEachLine(activeTab, uRegex);
+    else if (MarkdownHandler::linesAreAlreadyPrefixed(activeTab, oRegex))
+    {
+        MarkdownHandler::unPrependEachLine(activeTab, oRegex);
+        MarkdownHandler::prependEachLine(activeTab, "* ");
+    }
+    else
+        MarkdownHandler::prependEachLine(activeTab, "* ");
 }
 
 void    MainWindow::formatOList()
 {
-    //to-do : unordered and ordered lists
     QTextEdit   *activeTab = getCurrentTab();
+    QRegularExpression oRegex = QRegularExpression("^( *[0-9]+(\\.|\\))( |\t)+)");
+    QRegularExpression uRegex = QRegularExpression("^( *(-|\\*|\\+)( |\t)+)");
 
-    MarkdownHandler::prependEachLine(activeTab, "1. ");
+    if (MarkdownHandler::linesAreAlreadyPrefixed(activeTab, oRegex))
+        MarkdownHandler::unPrependEachLine(activeTab, oRegex);
+    else if (MarkdownHandler::linesAreAlreadyPrefixed(activeTab, uRegex))
+    {
+        MarkdownHandler::unPrependEachLine(activeTab, uRegex);
+        MarkdownHandler::prependEachLine(activeTab, "1. ");
+    }
+    else
+        MarkdownHandler::prependEachLine(activeTab, "1. ");
 
-    //to-do : unset list if already set
-    //to-do : transform unordered list to ordered list and vice-versa
-    //to-do : set empty list item if cursor has no selection
-
-
+    // to-do : empty lists
+    // to-do : nested lists
     // "^(?:\d+\.|[*+-]) .*(?:\r?\n(?!(?:\d+\.|[*+-]) ).*)*/gm"
 }
 
@@ -244,7 +261,7 @@ void    MainWindow::formatQuote()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
-    if (MarkdownHandler::isAlreadyPrefixed(activeTab, QRegularExpression("^ ?>+ ?")))
+    if (MarkdownHandler::linesAreAlreadyPrefixed(activeTab, QRegularExpression("^ ?>+ ?")))
         MarkdownHandler::unPrependEachLine(activeTab, QRegularExpression("^ ?>+ ?"));
     else
         MarkdownHandler::prependEachLine(activeTab, "> ");

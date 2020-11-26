@@ -19,7 +19,7 @@ MarkdownHandler::MarkdownHandler()
 //    cursor.insertText(str);
 //}
 
-bool    MarkdownHandler::isAlreadyPrefixed(QTextEdit *editor, QRegularExpression rx)
+bool    MarkdownHandler::linesAreAlreadyPrefixed(QTextEdit *editor, QRegularExpression rx)
 {
     QTextCursor     cursor = editor->textCursor();
     QTextDocument   *doc = editor->document();
@@ -65,13 +65,12 @@ void    MarkdownHandler::unPrependEachLine(QTextEdit *editor, QRegularExpression
     int start = doc->findBlock(cursor.selectionStart()).blockNumber();
     int end = doc->findBlock(cursor.selectionEnd()).blockNumber();
     cursor.setPosition(cursor.selectionStart());
-
     for (int i = start; i <= end; i++)
     {
         cursor.movePosition(QTextCursor::StartOfBlock);
         if (cursor.block().text().contains(rx))
         {
-            cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
+            cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
             cursor.insertText(cursor.selectedText().remove(rx));
         }
         cursor.movePosition(QTextCursor::NextBlock);
@@ -99,7 +98,7 @@ void    MarkdownHandler::wrapText(QTextEdit *editor, QString leftWrap, QString r
         cursor.insertText(leftWrap + text + rightWrap);
 }
 
-bool    MarkdownHandler::isAlreadyWrapped(QTextEdit *editor, QString leftWrap, QString rightWrap)
+bool    MarkdownHandler::blocksAreAlreadyWrapped(QTextEdit *editor, QString leftWrap, QString rightWrap)
 {
     QTextCursor cursor = editor->textCursor();
     int         start = cursor.selectionStart();
@@ -126,7 +125,7 @@ void    MarkdownHandler::wrapParagraph(QTextEdit *editor, QString leftWrap, QStr
     cursor.beginEditBlock();
     cursor.setPosition(cursor.selectionStart());
     cursor.movePosition(QTextCursor::StartOfBlock);
-    if  (isAlreadyWrapped(editor, leftWrap, rightWrap))
+    if  (blocksAreAlreadyWrapped(editor, leftWrap, rightWrap))
     {
         cursor.movePosition(QTextCursor::PreviousBlock);
         cursor.select(QTextCursor::BlockUnderCursor);

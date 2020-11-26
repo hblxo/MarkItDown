@@ -15,14 +15,14 @@ public:
 
     static void wrapText(QTextEdit *editor, QString leftWrap, QString rightWrap = NULL);
 //    static void wrapLine(QString leftWrap, QString rightWrap = NULL);
-    static bool isAlreadyPrefixed(QTextEdit *editor, QRegularExpression rx);
 
     //isAlreadyWrapped : check if selected blocks are already wrapped
-    static bool isAlreadyWrapped(QTextEdit *editor, QString leftWrap, QString rightWrap = NULL);
+    static bool blocksAreAlreadyWrapped(QTextEdit *editor, QString leftWrap, QString rightWrap = NULL);
     static void wrapParagraph(QTextEdit *editor, QString leftWrap, QString rightWrap = NULL);
 
 //    static void prependLine(QTextEdit *editor, QString str);
 //    static void appendLine(QTextEdit *editor, QString str);
+    static bool linesAreAlreadyPrefixed(QTextEdit *editor, QRegularExpression rx);
     static void prependEachLine(QTextEdit *editor, QString str);
     static void unPrependEachLine(QTextEdit *editor, QRegularExpression rx);
 };
