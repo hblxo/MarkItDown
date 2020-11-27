@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     fontSize->addItem(tr("Title 6"), 6);
     ui->toolBar->addWidget(fontSize);
     setActions();
-    connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(openTab()));
 }
 
 MainWindow::~MainWindow()
@@ -27,6 +26,7 @@ MainWindow::~MainWindow()
 
 void    MainWindow::setActions()
 {
+    connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(openTab()));
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(formatBold()));
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(formatItalic()));
     connect(ui->actionLink, SIGNAL(triggered()), this, SLOT(formatLink()));
@@ -44,6 +44,31 @@ void    MainWindow::setActions()
     connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->actionQuote, SIGNAL(triggered()), this, SLOT(formatQuote()));
     connect(ui->actionStrike, SIGNAL(triggered()), this, SLOT(formatStrikethrough()));
+    connect(ui->actionUndo, SIGNAL(triggered()), this, SLOT(undo()));
+    connect(ui->actionRedo, SIGNAL(triggered()), this, SLOT(redo()));
+    enableActions(false);
+}
+
+void    MainWindow::enableActions(bool boolean)
+{
+    ui->actionBold->setEnabled(boolean);
+    ui->actionItalic->setEnabled(boolean);
+    ui->actionLink->setEnabled(boolean);
+    ui->actionCodeSnippet->setEnabled(boolean);
+    ui->actionInlineCode->setEnabled(boolean);
+    ui->actionSave->setEnabled(boolean);
+    fontSize->setEnabled(boolean);
+    ui->actionCopy->setEnabled(boolean);
+    ui->actionCut->setEnabled(boolean);
+    ui->actionPaste->setEnabled(boolean);
+    ui->actionRule->setEnabled(boolean);
+    ui->actionList->setEnabled(boolean);
+    ui->actionUList->setEnabled(boolean);
+    ui->actionClose->setEnabled(boolean);
+    ui->actionQuote->setEnabled(boolean);
+    ui->actionStrike->setEnabled(boolean);
+    ui->actionUndo->setEnabled(boolean);
+    ui->actionRedo->setEnabled(boolean);
 }
 
 void MainWindow::onTextChanged()
@@ -65,6 +90,8 @@ void    MainWindow::openTab(QString title)
     ui->tabWidget->addTab(newTextEdit, title);
     connect(newTextEdit, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
     ui->tabWidget->setCurrentWidget(newTextEdit);
+    if (ui->tabWidget->count() == 1)
+        enableActions(true);
 }
 
 QTextEdit   *MainWindow::getCurrentTab()
@@ -206,6 +233,20 @@ void    MainWindow::paste()
     clipboard->setText(tmp);
 }
 
+void    MainWindow::undo()
+{
+    QTextEdit  *activeTab = getCurrentTab();
+
+    activeTab->undo();
+}
+
+void    MainWindow::redo()
+{
+    QTextEdit  *activeTab = getCurrentTab();
+
+    activeTab->redo();
+}
+
 void MainWindow::printRule()
 {
     QTextEdit   *activeTab = getCurrentTab();
@@ -216,6 +257,8 @@ void MainWindow::printRule()
 void    MainWindow::close()
 {
     ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
+    if (ui->tabWidget->count() == 0)
+        enableActions(false);
 }
 
 void    MainWindow::formatUList()

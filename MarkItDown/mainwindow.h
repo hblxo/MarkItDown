@@ -32,6 +32,7 @@ private:
     QTextEdit       *getCurrentTab();
 
 public slots:
+    void    enableActions(bool boolean);
     void    onTextChanged();
     void    openTab();
     void    openTab(QString title);
@@ -49,6 +50,8 @@ public slots:
     void    copy();
     void    cut();
     void    paste();
+    void    undo();
+    void    redo();
     void    formatTitle(int t);
     void    formatQuote();
     void    formatStrikethrough();
