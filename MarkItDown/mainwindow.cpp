@@ -175,6 +175,7 @@ void    MainWindow::save()
         }
         QTextStream out(&file);
         out << activeTab->toPlainText();
+        ui->tabWidget->setTabText(ui->tabWidget->indexOf(activeTab), fileName);
      }
 }
 
