@@ -42,6 +42,7 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuEdition">
     <property name="title">
@@ -53,8 +54,21 @@
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
    </widget>
+   <widget class="QMenu" name="menuInsrer">
+    <property name="title">
+     <string>Insérer</string>
+    </property>
+    <addaction name="actionRule"/>
+    <addaction name="actionInlineCode"/>
+    <addaction name="actionCodeSnippet"/>
+    <addaction name="actionLink"/>
+    <addaction name="actionList"/>
+    <addaction name="actionUList"/>
+    <addaction name="actionQuote"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuEdition"/>
+   <addaction name="menuInsrer"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -211,7 +225,7 @@
      <normaloff>:/icon/icons/033-link.png</normaloff>:/icon/icons/033-link.png</iconset>
    </property>
    <property name="text">
-    <string>Link</string>
+    <string>Insert link</string>
    </property>
   </action>
   <action name="actionList">
@@ -220,7 +234,7 @@
      <normaloff>:/icon/icons/038-number.png</normaloff>:/icon/icons/038-number.png</iconset>
    </property>
    <property name="text">
-    <string>List</string>
+    <string>Insert Ordered List</string>
    </property>
   </action>
   <action name="actionInlineCode">
@@ -229,7 +243,7 @@
      <normaloff>:/icon/icons/009-code.png</normaloff>:/icon/icons/009-code.png</iconset>
    </property>
    <property name="text">
-    <string>Inline Code</string>
+    <string>Insert inline code</string>
    </property>
    <property name="toolTip">
     <string>Inline Code </string>
@@ -241,7 +255,7 @@
      <normaloff>:/icon/icons/048-delete.png</normaloff>:/icon/icons/048-delete.png</iconset>
    </property>
    <property name="text">
-    <string>Rule</string>
+    <string>Insert Rule</string>
    </property>
   </action>
   <action name="actionClose">
@@ -271,7 +285,7 @@
      <normaloff>:/icon/icons/002-alphabet.png</normaloff>:/icon/icons/002-alphabet.png</iconset>
    </property>
    <property name="text">
-    <string>UList</string>
+    <string>Insert Unordered List</string>
    </property>
   </action>
   <action name="actionQuote">
@@ -280,7 +294,7 @@
      <normaloff>:/icon/icons/056-quote.png</normaloff>:/icon/icons/056-quote.png</iconset>
    </property>
    <property name="text">
-    <string>Quote</string>
+    <string>Insert Quote</string>
    </property>
   </action>
   <action name="actionCodeSnippet">
@@ -289,7 +303,7 @@
      <normaloff>:/icon/icons/programing.png</normaloff>:/icon/icons/programing.png</iconset>
    </property>
    <property name="text">
-    <string>Code Snippet</string>
+    <string>Insert code snippet</string>
    </property>
    <property name="toolTip">
     <string>Code Snippet</string>
