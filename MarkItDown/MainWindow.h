@@ -29,14 +29,16 @@ private:
     QComboBox       *fontSize;
 //    QTabWidget      *editTabs;
     void            setActions();
-    QTextEdit       *getCurrentTab();
+    TextEdit       *getCurrentTab();
 
 public slots:
     void    enableActions(bool boolean);
+    void    closeEvent(QCloseEvent *event) override;
     void    onTextChanged();
     void    openTab();
     void    openTab(const QString& title);
     void    closeTab();
+    void    closeTab(int index);
     void    formatOList();
     void    formatUList();
     void    formatBold();
@@ -46,6 +48,8 @@ public slots:
     void    formatCodeSnippet();
     void    printRule();
     void    save();
+    void    saveAs();
+    void    saveEvent();
     void    open();
     void    copy();
     void    cut();

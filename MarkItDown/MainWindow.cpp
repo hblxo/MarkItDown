@@ -46,6 +46,7 @@ void    MainWindow::setActions()
     connect(ui->actionStrike, SIGNAL(triggered()), this, SLOT(formatStrikethrough()));
     connect(ui->actionUndo, SIGNAL(triggered()), this, SLOT(undo()));
     connect(ui->actionRedo, SIGNAL(triggered()), this, SLOT(redo()));
+//    connect(ui->centralwidget, SIGNAL(destroyed()), this, SLOT(closeEvent()));
     enableActions(false);
 }
 
@@ -73,8 +74,10 @@ void    MainWindow::enableActions(bool boolean)
 
 void MainWindow::onTextChanged()
 {
-    QTextEdit *currentTab = getCurrentTab();
+    TextEdit *currentTab = getCurrentTab();
     QString md = currentTab->toPlainText();
+
+    currentTab->setSaved(false);
     ui->textBrowser->setMarkdown(md);
 }
 
@@ -157,7 +160,8 @@ void    MainWindow::saveEvent()
 {
     TextEdit   *activeTab = getCurrentTab();
 //    auto editor = activeTab->findChild<TextEdit*>();
-
+    if (activeTab->isSaved())
+        return;
     if (activeTab->getCurrentFile().isEmpty())
         saveAs();
     else
@@ -189,6 +193,7 @@ void    MainWindow::saveAs()
         ui->tabWidget->setTabText(ui->tabWidget->indexOf(activeTab), fileName);
 //        auto editor = activeTab->findChild<TextEdit *>();
         activeTab->setCurrentFile(fileName);
+        activeTab->setSaved(true);
     }
 }
 
@@ -208,6 +213,7 @@ void    MainWindow::save()
     }
     QTextStream out(&file);
     out << activeTab->toPlainText();
+    activeTab->setSaved(true);
 
 //    QString defaultPath;
 //    defaultPath += ui->tabWidget->currentWidget()->windowTitle();
@@ -308,9 +314,31 @@ void MainWindow::printRule()
 
 void    MainWindow::closeTab()
 {
+    TextEdit   *activeTab = getCurrentTab();
+
+    if (!activeTab->isSaved())
+    {
+        const QMessageBox::StandardButton ret
+                = QMessageBox::warning(this, tr("Application"),
+                                       tr("The document has been modified.\n"
+                                          "Do you want to save your changes?"),
+                                       QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        switch (ret) {
+            case QMessageBox::Save:
+                saveEvent();
+                break;
+            case QMessageBox::Cancel:
+                return;
+            default:
+                break;
+        };
+    }
     ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
     if (ui->tabWidget->count() == 0)
+    {
         enableActions(false);
+        ui->textBrowser->clear();
+    }
 }
 
 void    MainWindow::formatUList()
@@ -367,4 +395,18 @@ void    MainWindow::formatStrikethrough()
     QTextEdit   *activeTab = getCurrentTab();
 
     MarkdownHandler::wrapText(activeTab, "~~");
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    int tabCount = ui->tabWidget->count();
+    for(int i = 0; i < tabCount; i++)
+    {
+        closeTab(0);
+    }
+    QMainWindow::closeEvent(event);
+}
+
+void MainWindow::closeTab(int index) {
+    ui->tabWidget->setCurrentIndex(index);
+    closeTab();
 }

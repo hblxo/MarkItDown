@@ -2,7 +2,8 @@
 
 TextEdit::TextEdit()
 {
-
+    _currentFile = "";
+    _saved = true;
 //    this->setContextMenuPolicy(Qt::CustomContextMenu);
 
 //    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
@@ -12,7 +13,25 @@ TextEdit::TextEdit()
 
 TextEdit::TextEdit(QWidget *parent)
 {
+    _currentFile = "";
+    _saved = true;
     this->setParent(parent);
+}
+
+void TextEdit::setCurrentFile(const QString& fileName) {
+    this->_currentFile = fileName;
+}
+
+QString TextEdit::getCurrentFile() {
+    return this->_currentFile;
+}
+
+bool TextEdit::isSaved() const {
+    return _saved;
+}
+
+void TextEdit::setSaved(bool saved) {
+    this->_saved = saved;
 }
 
 //void    TextEdit::ShowContextMenu(const QPoint& pos) // this is a slot
