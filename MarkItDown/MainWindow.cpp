@@ -32,7 +32,7 @@ void    MainWindow::setActions()
     connect(ui->actionLink, SIGNAL(triggered()), this, SLOT(formatLink()));
     connect(ui->actionCodeSnippet, SIGNAL(triggered()), this, SLOT(formatCodeSnippet()));
     connect(ui->actionInlineCode, SIGNAL(triggered()), this, SLOT(formatInlineCode()));
-    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveEvent()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(fontSize, SIGNAL(activated(int)), this, SLOT(formatTitle(int)));
     connect(ui->actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
@@ -94,9 +94,9 @@ void    MainWindow::openTab(const QString& title)
         enableActions(true);
 }
 
-QTextEdit   *MainWindow::getCurrentTab()
+TextEdit   *MainWindow::getCurrentTab()
 {
-    return qobject_cast<QTextEdit *>(ui->tabWidget->currentWidget());
+    return qobject_cast<TextEdit *>(ui->tabWidget->currentWidget());
 }
 
 
@@ -153,30 +153,81 @@ void    MainWindow::formatCodeSnippet()
     MarkdownHandler::wrapParagraph(activeTab, "```");
 }
 
-void    MainWindow::save()
+void    MainWindow::saveEvent()
 {
-    QTextEdit   *activeTab = getCurrentTab();
+    TextEdit   *activeTab = getCurrentTab();
+//    auto editor = activeTab->findChild<TextEdit*>();
+
+    if (activeTab->getCurrentFile().isEmpty())
+        saveAs();
+    else
+        save();
+}
+
+void    MainWindow::saveAs()
+{
+    TextEdit   *activeTab = getCurrentTab();
 
     if (activeTab == nullptr)
         return;
     QString defaultPath;
-    defaultPath += "/tmp/";
-    defaultPath += ui->tabWidget->currentWidget()->windowTitle();
-    defaultPath += ".md";
+    defaultPath = activeTab->getCurrentFile();
+//    defaultPath += ui->tabWidget->currentWidget()->windowTitle();
+//    defaultPath += ".md";
     QString fileName = QFileDialog::getSaveFileName(activeTab, tr("Enregistrer le document"), defaultPath, "");
     if (fileName.isEmpty())
-            return;
+        return;
     else {
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(activeTab, tr("Impossible d'ouvrir le fichier"),
-                file.errorString());
+                                     file.errorString());
             return;
         }
         QTextStream out(&file);
         out << activeTab->toPlainText();
         ui->tabWidget->setTabText(ui->tabWidget->indexOf(activeTab), fileName);
-     }
+//        auto editor = activeTab->findChild<TextEdit *>();
+        activeTab->setCurrentFile(fileName);
+    }
+}
+
+void    MainWindow::save()
+{
+    TextEdit   *activeTab = getCurrentTab();
+
+    if (activeTab == nullptr)
+        return;
+    QString fileName = ui->tabWidget->tabText(ui->tabWidget->indexOf(activeTab));
+//    ui->tabWidget->currentWidget()->windowTitle();
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::information(activeTab, tr("Impossible d'ouvrir le fichier"),
+            file.errorString());
+        return;
+    }
+    QTextStream out(&file);
+    out << activeTab->toPlainText();
+
+//    QString defaultPath;
+//    defaultPath += ui->tabWidget->currentWidget()->windowTitle();
+//    defaultPath += ".md";
+//    QString fileName = QFileDialog::getSaveFileName(activeTab, tr("Enregistrer le document"), defaultPath, "");
+//    if (fileName.isEmpty())
+//            return;
+//    else {
+//        QFile file(fileName);
+//        if (!file.open(QIODevice::WriteOnly)) {
+//            QMessageBox::information(activeTab, tr("Impossible d'ouvrir le fichier"),
+//                file.errorString());
+//            return;
+//        }
+//        QTextStream out(&file);
+//        out << activeTab->toPlainText();
+//        ui->tabWidget->setTabText(ui->tabWidget->indexOf(activeTab), fileName);
+//        auto editor = activeTab->findChild<TextEdit *>();
+//        editor->setCurrentFile(fileName);
+//    }
 }
 
 void    MainWindow::open()
