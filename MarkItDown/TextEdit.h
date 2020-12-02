@@ -14,7 +14,7 @@ class TextEdit : public QTextEdit
     Q_OBJECT
 public:
     TextEdit();
-    TextEdit(QWidget *parent);
+    explicit TextEdit(QWidget *parent);
 
 public slots:
 //    void    ShowContextMenu(const QPoint& pos);

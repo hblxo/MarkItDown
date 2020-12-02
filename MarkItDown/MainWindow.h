@@ -20,14 +20,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
 
 private:
     Ui::MainWindow  *ui;
-    QFontComboBox   *fontBox;
+//    QFontComboBox   *fontBox;
     QComboBox       *fontSize;
-    QTabWidget      *editTabs;
+//    QTabWidget      *editTabs;
     void            setActions();
     QTextEdit       *getCurrentTab();
 
@@ -35,8 +35,8 @@ public slots:
     void    enableActions(bool boolean);
     void    onTextChanged();
     void    openTab();
-    void    openTab(QString title);
-    void    close();
+    void    openTab(const QString& title);
+    void    closeTab();
     void    formatOList();
     void    formatUList();
     void    formatBold();
@@ -60,8 +60,9 @@ public slots:
     // to-do : deactivate actions if no tab
     // to-do : override Os keyboard shortcut
 
-    //to-do : undo and redo
-    //to-do : image link
-    //to-do : options panel (auto-save, hardbreak with enter key, etc.)
+    // to-do : undo and redo
+    // to-do : image link
+    // to-do : about page
+    // to-do : options panel (auto-save, hard break with enter key, etc.)
 };
 #endif // MAINWINDOW_H

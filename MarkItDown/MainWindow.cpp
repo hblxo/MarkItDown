@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "MarkdownHandler.h"
 
@@ -41,7 +41,7 @@ void    MainWindow::setActions()
     connect(ui->actionRule, SIGNAL(triggered()), this, SLOT(printRule()));
     connect(ui->actionList, SIGNAL(triggered()), this, SLOT(formatOList()));
     connect(ui->actionUList, SIGNAL(triggered()), this, SLOT(formatUList()));
-    connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
+    connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeTab()));
     connect(ui->actionQuote, SIGNAL(triggered()), this, SLOT(formatQuote()));
     connect(ui->actionStrike, SIGNAL(triggered()), this, SLOT(formatStrikethrough()));
     connect(ui->actionUndo, SIGNAL(triggered()), this, SLOT(undo()));
@@ -83,7 +83,7 @@ void    MainWindow::openTab()
    openTab("Nouveau Document");
 }
 
-void    MainWindow::openTab(QString title)
+void    MainWindow::openTab(const QString& title)
 {
     QTextEdit       *newTextEdit;
     newTextEdit = new TextEdit(this);
@@ -157,7 +157,7 @@ void    MainWindow::save()
 {
     QTextEdit   *activeTab = getCurrentTab();
 
-    if (activeTab == NULL)
+    if (activeTab == nullptr)
         return;
     QString defaultPath;
     defaultPath += "/tmp/";
@@ -220,7 +220,7 @@ void    MainWindow::paste()
     QTextEdit  *activeTab = getCurrentTab();
     QClipboard *clipboard = QApplication::clipboard();
     QString originalText = clipboard->text();
-    QString tmp = originalText;
+    const QString& tmp = originalText;
     QTextCursor cursor = activeTab->textCursor();
 
     if (QRegularExpression("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]").match(originalText).hasMatch())
@@ -255,7 +255,7 @@ void MainWindow::printRule()
     cursor.insertText("\n----\n");
 }
 
-void    MainWindow::close()
+void    MainWindow::closeTab()
 {
     ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
     if (ui->tabWidget->count() == 0)

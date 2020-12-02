@@ -1,9 +1,7 @@
 #include "MarkdownHandler.h"
 
 MarkdownHandler::MarkdownHandler()
-{
-
-}
+= default;
 
 //void    MarkdownHandler::wrapLine(QString leftWrap, QString rightWrap)
 //{
@@ -19,7 +17,7 @@ MarkdownHandler::MarkdownHandler()
 //    cursor.insertText(str);
 //}
 
-bool    MarkdownHandler::linesAreAlreadyPrefixed(QTextEdit *editor, QRegularExpression rx)
+bool    MarkdownHandler::linesAreAlreadyPrefixed(QTextEdit *editor, const QRegularExpression& rx)
 {
     QTextCursor     cursor = editor->textCursor();
     QTextDocument   *doc = editor->document();
@@ -38,7 +36,7 @@ bool    MarkdownHandler::linesAreAlreadyPrefixed(QTextEdit *editor, QRegularExpr
     return false;
 }
 
-void    MarkdownHandler::prependEachLine(QTextEdit *editor, QString str)
+void    MarkdownHandler::prependEachLine(QTextEdit *editor, const QString& str)
 {
     QTextCursor cursor = editor->textCursor();
     QTextDocument *doc = editor->document();
@@ -57,7 +55,7 @@ void    MarkdownHandler::prependEachLine(QTextEdit *editor, QString str)
     }
 }
 
-void    MarkdownHandler::unPrependEachLine(QTextEdit *editor, QRegularExpression rx)
+void    MarkdownHandler::unPrependEachLine(QTextEdit *editor, const QRegularExpression& rx)
 {
     QTextCursor     cursor = editor->textCursor();
     QTextDocument   *doc = editor->document();
@@ -81,12 +79,12 @@ void    MarkdownHandler::unPrependEachLine(QTextEdit *editor, QRegularExpression
 //{
 //}
 
-void    MarkdownHandler::wrapText(QTextEdit *editor, QString leftWrap, QString rightWrap)
+void    MarkdownHandler::wrapText(QTextEdit *editor, const QString& leftWrap, QString rightWrap)
 {
     QTextCursor cursor = editor->textCursor();
     QString     text = cursor.selectedText();
 
-    if (rightWrap == NULL)
+    if (rightWrap == nullptr)
         rightWrap = leftWrap;
     if (text.indexOf(leftWrap) == 0 && text.lastIndexOf(rightWrap) == text.length() - rightWrap.length())
     {
@@ -98,7 +96,7 @@ void    MarkdownHandler::wrapText(QTextEdit *editor, QString leftWrap, QString r
         cursor.insertText(leftWrap + text + rightWrap);
 }
 
-bool    MarkdownHandler::blocksAreAlreadyWrapped(QTextEdit *editor, QString leftWrap, QString rightWrap)
+bool    MarkdownHandler::blocksAreAlreadyWrapped(QTextEdit *editor, const QString& leftWrap, const QString& rightWrap)
 {
     QTextCursor cursor = editor->textCursor();
     int         start = cursor.selectionStart();
@@ -115,12 +113,12 @@ bool    MarkdownHandler::blocksAreAlreadyWrapped(QTextEdit *editor, QString left
     return true;
 }
 
-void    MarkdownHandler::wrapParagraph(QTextEdit *editor, QString leftWrap, QString rightWrap)
+void    MarkdownHandler::wrapParagraph(QTextEdit *editor, const QString& leftWrap, QString rightWrap)
 {
     QTextCursor cursor = editor->textCursor();
     int         end = cursor.selectionEnd();
 
-    if (rightWrap == NULL)
+    if (rightWrap == nullptr)
         rightWrap = leftWrap;
     cursor.beginEditBlock();
     cursor.setPosition(cursor.selectionStart());
