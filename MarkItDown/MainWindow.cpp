@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "MarkdownHandler.h"
 
@@ -78,7 +78,10 @@ void MainWindow::onTextChanged()
     QString md = currentTab->toPlainText();
 
     currentTab->setSaved(false);
-    ui->textBrowser->setMarkdown(md);
+//    /*ui->textBrowser->*/loadResource(QTextDocument::MarkdownResource, md);
+//    ui->textBrowser->setText(md);
+    ui->textBrowser->document()->setMarkdown(md);
+//    ui->textBrowser->setDocument(currentTab->document());
 }
 
 void    MainWindow::openTab()
